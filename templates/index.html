@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+  integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
+  crossorigin="anonymous">
+    <title>Buffalo Property Index Search</title>
+     <style type="text/css">
+      .Linkify{
+        display: none;
+      }
+      .holder{
+        display:  none;
+      }
+    </style>
+  </head>
+  <body class="animated fadeIn">
+   
+  <div class="container" style="margin-top: 5%;">
+    <div class="row">
+      <div class="col-sm-4">
+        <h1>Buffalo Property Index Search</h1>
+        <p>This is a tool that helps users get information on any property in the city. Just enter the house number and street into the search box and get the data that you want.</p>
+
+          <div class="form-group" id="form">
+            <p   class="text-muted" style="margin: 0px">Example: 112 Peter (no st or ave)</p>
+            <input type="address" class="form-control" id="InputAddress" aria-describedby="emailHelp" placeholder="Enter Property Address">
+          </div>
+          <button onclick="search();" type="button" class="btn btn-primary">Submit</button>
+
+          <p style="margin-top:40px;" class="text-muted">Coded by <a href="http://www.millennialdave.com" target="_blank">Millennial Dave</a></p>
+        
+
+      </div>
+      <div class="col-sm holder">
+        <!-- <iframe src="https://www.google.com/maps/embed?pb=!4v1524258172491!6m8!1m7!1s6MnDIYKZjYfZctg8yYsJpQ!2m2!1d42.88647842385519!2d-78.87881193670859!3f290.3268944696768!4f35.80159403152433!5f0.7820865974627469" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe> -->
+        <img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=42.940699, -78.888574&fov=60&pitch20&heading=0key=AIzaSyBL3aQLfqTmcOgoD8bgJNAqGP7LqKXk3CE" id="map" style="width:100%;" height="400"/>
+        <h3 class="location"></h3>
+        <table class="table table-borderless table-condensed table-discrete schema-table">
+    <thead>
+      
+    </thead>
+    <tbody>
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="sbl" role="link" tabindex="0">
+        <td class="column-name" scope="row">SBL</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">A unique geographic identifier for all parcels, stands for Section-Block-Lot number. It is where the parcel is located on the County tax maps.</span>
+            <span class="sbl"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="swis" role="link" tabindex="0">
+        <td class="column-name" scope="row">TAX DISTRICT</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The last two digits represent the tax district where the parcel of real property is located</span>
+            <span class="td"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="printkey" role="link" tabindex="0">
+        <td class="column-name" scope="row">SBL NUMBER</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">A secondary format for SBL, a unique geographic identifier for all parcels, stands for Section-Block-Lot number.</span>
+            <span class="sbln"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="front" role="link" tabindex="0">
+        <td class="column-name" scope="row">FRONT</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The width of the front of property (in feet)</span>
+            <span class="front"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="depth" role="link" tabindex="0">
+        <td class="column-name" scope="row">DEPTH</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The depth of the property (in feet)</span>
+            <span class="depth"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="propclass" role="link" tabindex="0">
+        <td class="column-name" scope="row">PROPERTY CLASS</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">Property Type Classification Codes describe the primary use of each parcel of real property on the assessment roll</span>
+            <span class="pc"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="desc1" role="link" tabindex="0">
+        <td class="column-name" scope="row">PROP CLASS DESCRIPTION</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">A description of the primary use of each parcel of real property on the assessment roll</span>
+            <span class="pcd"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="propclassprev" role="link" tabindex="0">
+        <td class="column-name" scope="row">PREVIOUS PROPERTY CLASS</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The parcel of real property's property class code on the previous assessment roll</span>
+            <span class="ppc"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="owner1" role="link" tabindex="0">
+        <td class="column-name" scope="row">OWNER1</td>
+        <td class="column-description">
+          <div class="contents clamped" data-original-height="21" style="height: 21px;">
+            <span class="Linkify">The owner of a parcel of real property</span>
+          </div>
+          <span class="owner1"></span>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="owner2" role="link" tabindex="0">
+        <td class="column-name" scope="row">OWNER2</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The owner of a parcel of real property</span>
+          </div>
+          <span class="owner2"></span>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="mail1" role="link" tabindex="0">
+        <td class="column-name" scope="row">MAIL1</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The mailing address of the property owner</span>
+            <span class="mail1"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="mail2" role="link" tabindex="0">
+        <td class="column-name" scope="row">MAIL2</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The mailing address of the property owner</span>
+            <span class="mail2"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="mail3" role="link" tabindex="0">
+        <td class="column-name" scope="row">MAIL3</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The mailing address of the property owner</span>
+            <span class="mail3"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="mail4" role="link" tabindex="0">
+        <td class="column-name" scope="row">MAIL4</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The mailing address of the property owner</span>
+            <span class="mail4"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="hsenofr" role="link" tabindex="0">
+        <td class="column-name" scope="row">HOUSE NUMBER</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The assessed street address number associated with a parcel of real property</span>
+            <span class="hn"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="street" role="link" tabindex="0">
+        <td class="column-name" scope="row">STREET</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The assessed street name where the parcel of real property is located</span>
+            <span class="street"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="propzip5" role="link" tabindex="0">
+        <td class="column-name" scope="row">ZIP CODE (5-DIGIT)</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The 5-digit zip code associated with the parcel of real property</span>
+            <span class="zip5"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="propzip4" role="link" tabindex="0">
+        <td class="column-name" scope="row">ZIP CODE (4-DIGIT)</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The 4-digit zip code extension used after the 5-digit zip code to refer to a more specific postal delivery area</span>
+            <span class="zip4"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="deedbook" role="link" tabindex="0">
+        <td class="column-name" scope="row">DEED BOOK</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The book number given to the last deed recorded with the Erie County Clerk's office</span>
+            <span class="db"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="deedpage" role="link" tabindex="0">
+        <td class="column-name" scope="row">DEED PAGE</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The page number given to the last deed recorded with the Erie County Clerk's office</span>
+            <span class="dp"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="deeddate" role="link" tabindex="0">
+        <td class="column-name" scope="row">DEED DATE</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The date the deed was filed with the Erie County Clerk's office</span>
+            <span class="dd"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="roll" role="link" tabindex="0">
+        <td class="column-name" scope="row">ROLL SECTION</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">A code to indicate the portion the portion of the assessment roll. For example, roll section 1 is taxable. Roll section 8 is tax-exempt.</span>
+            <span class="rs"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="landval" role="link" tabindex="0">
+        <td class="column-name" scope="row">LAND VALUE</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The assessed value of the land</span>
+            <span class="lv"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="totalval" role="link" tabindex="0">
+        <td class="column-name" scope="row">TOTAL VALUE</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The combined assessed value of the land and improvements on the parcel</span>
+            <span class="tv"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="saleprice" role="link" tabindex="0">
+        <td class="column-name" scope="row">SALE PRICE</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The price that the parcel of real property was last sold for</span>
+            <span class="sp"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="yrblt" role="link" tabindex="0">
+        <td class="column-name" scope="row">YEAR BUILT</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The year the primary building on the parcel was built</span>
+            <span class="yb"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="totallivarea" role="link" tabindex="0">
+        <td class="column-name" scope="row">TOTAL LIVING AREA</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The amount of living space (in square feet)</span>
+            <span class="tla"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="ovrallcon" role="link" tabindex="0">
+        <td class="column-name" scope="row">OVERALL CONDITION</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">A grade of the condition of the property</span>
+            <span class="oc"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="bldgstyle" role="link" tabindex="0">
+        <td class="column-name" scope="row">BUILDING STYLE</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">A code for the style of building</span>
+            <span class="bs"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="heattype" role="link" tabindex="0">
+        <td class="column-name" scope="row">HEAT TYPE</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The type of heating system in the building (only applicable to residential properties)</span>
+            <span class="ht"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="basetype" role="link" tabindex="0">
+        <td class="column-name" scope="row">BASEMENT TYPE</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The type of basement on the property (only applicable to residential properties)</span>
+            <span class="bt"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="nofirepl" role="link" tabindex="0">
+        <td class="column-name" scope="row"># OF FIREPLACES</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The number of fireplaces in a dwelling (only applicable to residential properties)</span>
+            <span class="fire"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="nobed" role="link" tabindex="0">
+        <td class="column-name" scope="row"># OF BEDS</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The number of beds in a dwelling (only applicable to residential properties)</span>
+            <span class="bed"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="nobath" role="link" tabindex="0">
+        <td class="column-name" scope="row"># OF BATHS</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The number of baths in a dwelling (only applicable to residential properties)</span>
+            <span class="bath"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="censusno" role="link" tabindex="0">
+        <td class="column-name" scope="row">CENSUS TRACT</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The census tract where the parcel of real property is located</span>
+            <span class="ct"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="council" role="link" tabindex="0">
+        <td class="column-name" scope="row">COUNCIL DISTRICT</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The council district where the parcel of real property is located</span>
+            <span class="cd"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+      
+      <tr aria-expanded="false" aria-haspopup="true" class="column-summary" data-column="location_1" role="link" tabindex="0">
+        <td class="column-name" scope="row">LOCATION</td>
+        <td class="column-description">
+          <div class="contents clamped">
+            <span class="Linkify">The geographic location of the parcel of real property</span>
+            <span class="location"></span>
+          </div>
+        </td>
+        
+        <td class="column-expand"><span class="icon-arrow-down"></span></td>
+      </tr>
+    </tbody>
+  </table>
+      </div>
+    </div>
+  </div>
+ 
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      $('#InputAddress').keypress(function (e) {
+        if (e.which == 13) {
+          search();
+          return false;    //<---- Add this line
+        }
+      });
+      function search()
+      { 
+
+          var id = $('#InputAddress').val();
+          //alert("enterd "+id);
+          //document.getElementById("disp").innerHTML ="hi";
+              $.ajax({
+              url:"/getData",
+              method:"POST", //First change type to method here
+
+              data:{
+                address: id, // Second add quotes on the value.
+              },
+              success:function(response) {
+               $(".location")[0].textContent = response.location;
+               $(".location")[1].textContent = response.location;
+               var lon = response.location.split('(')[1].split(',')[1].replace(')','');
+               console.log(response)
+               var lat = response.location.split('(')[1].split(',')[0]
+               console.log(lat)
+               var src = 'https://maps.googleapis.com/maps/api/streetview?size=800x400&location='+lat+','+lon+'&fov=90&pitch=10&heading=235key=AIzaSyBL3aQLfqTmcOgoD8bgJNAqGP7LqKXk3CE'
+               $('#map').attr('src', src);
+               $(".sbl")[0].textContent = response.sbl;
+               $(".td")[0].textContent = response.tax_district;
+               $(".sbln")[0].textContent = response.sbl_number;
+               $(".front")[0].textContent = response.front;
+               $(".depth")[0].textContent = response.depth;
+               $(".pc")[0].textContent = response.property_class;
+               $(".owner1")[0].textContent = response.owner1;
+               $(".owner2")[0].textContent = response.owner2;
+               $(".mail1")[0].textContent = response.mail1;
+               $(".mail2")[0].textContent = response.mail2;
+               $(".mail3")[0].textContent = response.mail3;
+               $(".mail4")[0].textContent = response.mail4;
+               $(".hn")[0].textContent = response.house_number;
+               $(".street")[0].textContent = response.street;
+               $(".zip5")[0].textContent = response.zip_code_5_digit;
+               $(".zip4")[0].textContent = response.zip_code_4_digit;
+               $(".db")[0].textContent = response.deed_book;
+               $(".dp")[0].textContent = response.deed_page;
+               $(".dd")[0].textContent = response.deed_date;
+               $(".rs")[0].textContent = response.roll_section;
+               $(".lv")[0].textContent = response.land_value;
+               $(".tv")[0].textContent = response.total_value;
+               $(".sp")[0].textContent = response.sale_price;
+               $(".yb")[0].textContent = response.year_built;
+               $(".tla")[0].textContent = response.total_living_area;
+               $(".oc")[0].textContent = response.overall_condition;
+               $(".bs")[0].textContent = response.building_style;
+               $(".ht")[0].textContent = response.heat_type;
+               $(".bt")[0].textContent = response.basement_type;
+               $(".fire")[0].textContent = response._of_fireplaces;
+               $(".bed")[0].textContent = response._of_beds;
+               $(".bath")[0].textContent = response._of_baths;
+               $(".ct")[0].textContent = response.census_tract;
+               $(".cd")[0].textContent = response.council_district;
+               $(".holder").show();
+               $(".holder").addClass('animated bounceInUp')
+
+               console.log(response)
+             },
+             error:function(){
+              alert("Sorry we can't find the property you are searching for");
+             }
+
+            });
+
+      }
+    </script>
+  </body>
+</html>

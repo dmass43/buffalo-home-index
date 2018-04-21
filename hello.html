@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Price</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap.css')}}">
+</head>
+<body>
+
+<table>
+    <tr>
+    	<th>Product{{k}}</th>
+    	<th>CL Price</th>
+    	<th>Ebay Price</th>
+    	<th>Difference</th>
+    </tr>
+    {% for result in products %}
+	<tr>
+		<td><a href="{{result[4]}}" target="_blank">{{result[0]}}</a></td>
+		<td>{{result[1]}}</td>
+		<td>{{result[2]}}</td>
+		<td>{{result[3]}}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+</body>
+</html>
